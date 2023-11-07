@@ -15,11 +15,11 @@ app.get("/", (req: Request, res: Response) => {
 const corsOptions = {
     origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true, //access-control-allow-credentials:true
+    credentials: true,
     optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions)); // Use this fter the variable declaration
+app.use(cors(corsOptions));
 
 app.use("/data", dataRouter);
 
