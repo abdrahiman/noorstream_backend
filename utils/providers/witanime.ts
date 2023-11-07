@@ -6,6 +6,9 @@ interface IAnime {
 }
 
 export class WitAnime {
+    static getHomePage() {
+        throw new Error("Method not implemented.");
+    }
     mainUrl: string;
     name: string;
     constructor() {
@@ -16,6 +19,23 @@ export class WitAnime {
         let res = await axios.get(this.mainUrl);
         let $ = load(res.data);
         //start scraping
+        const latestEpisodes: any[] = [];
+        $(".episodes-card-container .episodes-card").each((index, element) => {
+            const title = $(element).find(".ep-card-anime-title h3 a").text();
+            const episode = $(element).find(".episodes-card-title h3 a").text();
+            const image = $(element)
+                .find(".ehover6 img.img-responsive")
+                .attr("src");
+            const link = $(element).find(".ehover6 a").attr("href");
+            const data = {
+                title,
+                episode,
+                image,
+                link,
+            };
+            latestEpisodes.push(data);
+        });
+        return latestEpisodes;
     }
     async getSearch(query: string) {
         const q = query.replace(/ /g, "%20");
