@@ -23,6 +23,8 @@ app.use(cors(corsOptions));
 
 app.use("/data", dataRouter);
 
+app.use("/search:query", dataRouter);
+
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });

@@ -76,6 +76,8 @@ export class WitAnime {
         let episode = document.querySelectorAll(".episodes-card-title h3 a");
         let image = document.querySelectorAll(".ehover6 img.img-responsive");
         let link = document.querySelectorAll(".ehover6 a");
+        let statu= document.querySelectorAll(".anime-card-poster .anime-card-status a");
+        let type= document.querySelectorAll(".anime-card-details anime-card-type a");
         let arr: any = [];
         for (let i = 0; i < title.length; i++) {
             arr.push({
@@ -83,6 +85,8 @@ export class WitAnime {
                 episode: episode[i].textContent,
                 image: image[i].getAttribute("src"),
                 link: link[i].getAttribute("href"),
+                type: type[i].textContent,
+                statu: statu[i].textContent,
             });
         }
         return arr;
