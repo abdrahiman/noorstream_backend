@@ -11,5 +11,6 @@ export class WitAnime {
     async getHomePage() {
         let res = await axios.get(this.mainUrl);
         let $ = load(res.data);
+        //start scraping
     }
 }
