@@ -1,0 +1,5 @@
+url_Web_Scraping = "https://witanime.pics/"
+npm i :
+cherio : for scraping the data from the website
+express : for creating the server
+nodemon : for running the server
