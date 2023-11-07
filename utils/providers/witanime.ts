@@ -1,6 +1,8 @@
-import axios from "axios";
-import { load } from "cheerio";
 
+
+import puppeteerExtra from 'puppeteer-extra';
+import Stealth from 'puppeteer-extra-plugin-stealth';
+// npm i puppeteer-extra puppeteer-extra-plugin-stealth
 interface IEpisode {
     title: string;
     episode: string;
@@ -16,31 +18,39 @@ export class WitAnime {
         this.mainUrl = "https://witanime.pics/";
         this.name = "witanime";
     }
-
     async getHomePage(): Promise<IEpisode[] | null> {
         try {
-            const res = await axios.get("https://witanime.pics/");
-            const $ = load(res.data);
-            const latestEpisodes: IEpisode[] = [];
+            puppeteerExtra.use(Stealth());
+  const browser = await puppeteerExtra.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    ignoreHTTPSErrors: true,
+    
+  });
 
-            $(".episodes-card-container .episodes-card").each((index, element) => {
-                const title = $(element).find(".ep-card-anime-title h3 a").text();
-                const episode = $(element).find(".episodes-card-title h3 a").text();
-                const image = $(element).find(".ehover6 img.img-responsive").attr("src");
-                const link = $(element).find(".ehover6 a").attr("href");
+  const page = await browser.newPage();
 
-                if (title && episode && image && link) {
-                    const data: IEpisode = {
-                        title,
-                        episode,
-                        image,
-                        link,
-                    };
-                    latestEpisodes.push(data);
-                }
+    await page.goto('https://witanime.pics/');
+    await page.waitForSelector(".ep-card-anime-title h3 a");
+    const data = await page.evaluate(() => {
+        let title = document.querySelectorAll(".ep-card-anime-title h3 a");
+        let episode = document.querySelectorAll(".episodes-card-title h3 a");
+        let image = document.querySelectorAll(".ehover6 img.img-responsive");
+        let link = document.querySelectorAll(".ehover6 a");
+        let arr: any = [];
+        for (let i = 0; i < title.length; i++) {
+            arr.push({
+                title: title[i].textContent,
+                episode: episode[i].textContent,
+                image: image[i].getAttribute("src"),
+                link: link[i].getAttribute("href"),
             });
-
-            return latestEpisodes;
+        }
+        return arr;
+    }
+    );
+    await browser.close();
+    return data;
         } catch (err) {
             console.error("Error fetching data:", err);
             return null;
