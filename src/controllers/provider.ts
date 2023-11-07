@@ -4,7 +4,7 @@ import { WitAnime } from "../../utils/providers/witanime";
 let getHomePage = async (req: Request, res: Response) => {
     try {
         // get all the latest anime episodes from the website then return it to the user
-        let data = WitAnime.getHomePage();
+        let data = await WitAnime.prototype.getHomePage();
         return data;
     } catch (err: any) {
         return null;
