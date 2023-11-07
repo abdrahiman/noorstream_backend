@@ -13,6 +13,7 @@ export class WitAnime {
         this.name = "witanime";
     }
     async getHomePage() {
+        try{
         let res = await axios.get(this.mainUrl);
         let $ = load(res.data);
         //start scraping
@@ -22,6 +23,7 @@ export class WitAnime {
             const episode = $(element).find(".episodes-card-title h3 a").text();
             const image = $(element).find(".ehover6 img.img-responsive").attr("src");
             const link = $(element).find(".ehover6 a").attr("href");
+            if (!title || !episode || !image || !link) return;
             const data = {
                 title,
                 episode,
@@ -31,8 +33,11 @@ export class WitAnime {
             latestEpisodes.push(data);
         });
         return latestEpisodes;
-
-
+    }
+    catch(err){
+        console.log(err);
+        return null;
+    }
     }
 }
 
