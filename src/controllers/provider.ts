@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 
 let getHomePage = async (req: Request, res: Response) => {
   try {
+    // get all the latest anime episodes from the website then return it to the user
+    
   } catch (err: any) {
     return null;
   }
