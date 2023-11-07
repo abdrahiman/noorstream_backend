@@ -6,7 +6,8 @@ let getHomePage = async (req: Request, res: Response) => {
         // get all the latest anime episodes from the website then return it to the user
         let data = await WitAnime.prototype.getHomePage();
         return data;
-    } catch (err: any) {
+    } 
+    catch (err: any) {
         return null;
     }
 };
