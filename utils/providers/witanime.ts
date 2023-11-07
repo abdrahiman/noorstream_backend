@@ -6,9 +6,6 @@ interface IAnime {
 }
 
 export class WitAnime {
-    static getHomePage() {
-        throw new Error("Method not implemented.");
-    }
     mainUrl: string;
     name: string;
     constructor() {

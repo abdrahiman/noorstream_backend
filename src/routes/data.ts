@@ -12,6 +12,6 @@ let router = express.Router();
 router.get("/", getHomePage);
 router.get("/search", getSearch);
 router.get("/episode", getEpisode);
-router.get("/:provider/season", getSeason);
+router.get("/season", getSeason);
 
 export default router;
