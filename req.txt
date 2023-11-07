@@ -1,2 +1,4 @@
 npm i :
 cherio : for scraping the data from the website
+express : for creating the server
+nodemon : for running the server
