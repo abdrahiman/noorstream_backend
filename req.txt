@@ -1,0 +1,2 @@
+npm i :
+cherio : for scraping the data from the website
